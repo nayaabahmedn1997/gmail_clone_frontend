@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from 
+import {createSlice, createAsyncThunk, isRejectedWithValue} from 
 '@reduxjs/toolkit';
 import axiosInstance from '../../utils/axiosInstance';
 import { generateToast } from '../../utils/generateToast';
@@ -6,16 +6,21 @@ import { generateToast } from '../../utils/generateToast';
 //Create and async thunk fir fetching user data
 
 export const fetchUserData = 
-createAsyncThunk('user/fetchUserData', async()=>{
+createAsyncThunk('user/fetchUserData', async(_,{ rejectWithValue })=>{
     const token = localStorage.getItem('token-url');
-    
-        const response = await axiosInstance.get("/api/users/get-userData",{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        });
-         
-        return await response.data;
+        try {
+            const response = await axiosInstance.get("/api/users/get-userData",{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            });
+             
+            return await response.data;
+        } catch (error) {
+           // Return a detailed error message with rejectWithValue
+            return rejectWithValue( error.message);
+        }
+      
     
   
 })
@@ -39,7 +44,7 @@ const userSlice = createSlice({
         })
         .addCase(fetchUserData.rejected, (state, action)=>{
             state.status = 'failed';
-            state.error = action.error.message;
+            state.error = action.payload || 'Something went wrong';
         })
     }
 });

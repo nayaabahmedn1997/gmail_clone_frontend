@@ -1,0 +1,24 @@
+.card-container
+{
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+.main-card
+{
+    width: 30rem;
+     border-radius: 15px
+}
+.card-title
+{
+    color: #4A90E2;
+}
+.submit-button
+{
+    background-color: #4A90E2;
+    border: none;
+    border-radius: 10px
+}
+.card-link{
+    color: #4A90E2;
+    text-decoration: none;
+}

@@ -6,6 +6,8 @@ import LoginPage from './pages/LoginPage';
 import Homepage from './pages/Homepage';
 import {Provider} from 'react-redux'
 import store from './store';
+import EmailPage from './pages/EmailPage';
+import SingleEmail from './components/SingleEmail';
 
 
 function App() {
@@ -23,6 +25,10 @@ function App() {
      <Route
     path='/login' exact
     element={<LoginPage />}
+    />
+    <Route 
+    path='/inbox/:email_id'
+    element={<SingleEmail />}
     />
    </Routes>
    </Provider>

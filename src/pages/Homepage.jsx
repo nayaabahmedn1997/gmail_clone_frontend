@@ -10,12 +10,14 @@ import {
   InboxOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  PlusOutlined,
   SendOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import UserDropdown from '../components/UserDropdown';
 import SearchComponent from '../components/SearchComponent';
 import EmailContent from '../components/EmailContent';
+import ComposeEmail from '../components/ComposeEmail';
 const { Header, Sider, Content } = Layout;
 
 
@@ -26,6 +28,17 @@ const Homepage = () => {
   const userStatus = useSelector((state)=>state.user.status);
   const userError = useSelector((state) => state.user.error);
   const [collapsed, setCollapsed] = useState(false);
+  const [isComposeVisible, setIsComposeVisible] = useState(false);
+  // Function to open the Compose Email modal
+  const handleComposeClick = () => {
+    setIsComposeVisible(true);
+  };
+
+  // Function to close the Compose Email modal
+  const handleCloseCompose = () => {
+    setIsComposeVisible(false);
+  };
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -70,22 +83,31 @@ const Homepage = () => {
           defaultSelectedKeys={['1']}
           items={[
             {
-              key: '1',
+              key:'1',
+              icons: <PlusOutlined />,
+              label: 'Compose',
+              onClick: ()=>{
+                setIsComposeVisible(true);
+              }
+              
+            },
+            {
+              key: '2',
               icon: <InboxOutlined />,
               label: 'Inbox',
             },
             {
-              key: '2',
+              key: '3',
               icon: <SendOutlined />,
               label: 'Sent',
             },
             {
-              key: '3',
+              key: '4',
               icon: <DeleteOutlined />,
               label: 'Trash',
             },
             {
-              key: '4',
+              key: '5',
               icon: <FileOutlined />,
               label: 'Draft',
             },
@@ -126,6 +148,10 @@ const Homepage = () => {
             borderRadius: borderRadiusLG,
           }}
         >
+           {/* Render ComposeEmail component only when isComposeVisible is true */}
+         {isComposeVisible && (
+        <ComposeEmail onClose={handleCloseCompose} />
+          )}
           <EmailContent />
         </Content>
       </Layout>

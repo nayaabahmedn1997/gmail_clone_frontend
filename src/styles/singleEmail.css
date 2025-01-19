@@ -1,0 +1,88 @@
+.email-container
+{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+.email-navbar
+{
+    
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.email-navbar-back-button, .email-navbar-delete-button{
+    background-color: white;
+    padding: 10px;
+    font-size: 24px;
+}
+.email-navbar-back-button:hover,.email-navbar-delete-button:hover{
+    background-color: grey;
+    
+}
+.email-subject-text
+{
+    font-size: 20px;
+}
+.email-folder
+{
+    font-weight: lighter;
+    background-color: grey;
+    font-size: 16px;
+    margin-left: 10px;
+    border-radius: 8px;
+    padding: 5px;
+}
+.email-sender-detail
+{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Style the circular background */
+.sender-icon {
+    width: 30px; /* Adjust size */
+    height: 30px; /* Adjust size */
+    background-color: #3498db; /* Background color */
+    border-radius: 50%; /* Make it circular */
+    display: flex; /* Center the icon */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    color: #fff; /* Icon color */
+    font-size: 24px; /* Icon size */
+  }
+
+  /* Hover effect */
+  .sender-icon:hover {
+    background-color: #2980b9; /* Darken background on hover */
+    cursor: pointer;
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    transition: 0.3s ease;
+  }
+  .sender-info
+  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+  .sender-details
+  {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .grey-text
+  {
+    color: grey;
+    font-size: 16px;
+  }

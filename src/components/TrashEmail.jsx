@@ -13,7 +13,7 @@ import '../styles/singleEmail.css'
 
 // Extend Day.js with the RelativeTime plugin
 dayjs.extend(relativeTime);
-const SingleEmail = () => {
+const TrashEmail = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState(null);
     const {email_id} = useParams();
@@ -31,11 +31,11 @@ const SingleEmail = () => {
         }
     }
 
-    const moveMailToTrash = async  ()=>{
+    const deleteMail = async  ()=>{
       try {
         const token = localStorage.getItem("token-url");
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const response  = await axiosInstance.post('/api/email/move-to-trash', {email_id}, config);
+        const response  = await axiosInstance.post('/api/email/delete-an-email', {email_id}, config);
         const data = await response.data;
         generateToast(data.message, TOAST_SUCCESS);
         navigate("/")
@@ -67,7 +67,7 @@ const SingleEmail = () => {
       </button>
       <button className="email-navbar-delete-button"
       data-toggle="tooltip" data-placement="bottom" title="move to trash"
-      onClick={()=>moveMailToTrash()}
+      onClick={()=>deleteMail()}
       >
         <DeleteOutlined />
       </button>
@@ -132,4 +132,4 @@ const SingleEmail = () => {
   )
 }
 
-export default SingleEmail
+export default TrashEmail

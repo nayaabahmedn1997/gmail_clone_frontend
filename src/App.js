@@ -8,6 +8,7 @@ import {Provider} from 'react-redux'
 import store from './store';
 import EmailPage from './pages/EmailPage';
 import SingleEmail from './components/SingleEmail';
+import SingleEmailViewComponent from './components/SingleEmailVeiwComponent';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
     />
     <Route 
     path='/inbox/:email_id'
-    element={<SingleEmail />}
+    element={<SingleEmailViewComponent />}
     />
    </Routes>
    </Provider>

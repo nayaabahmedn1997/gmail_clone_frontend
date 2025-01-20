@@ -14,12 +14,14 @@
     display: flex;
     gap: 40px;
     align-items: center;
+    padding-top: 20px;
 }
 
 .email-navbar-back-button, .email-navbar-delete-button{
     background-color: white;
     padding: 10px;
-    font-size: 24px;
+    font-size: 18px;
+    
 }
 .email-navbar-back-button:hover,.email-navbar-delete-button:hover{
     background-color: grey;

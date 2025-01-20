@@ -9,7 +9,6 @@ import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToas
 const ComposeEmail = ({ onClose }) => {
   const [attachment, setAttachment] = useState(null);
   const [fileName, setFileName] = useState();
-  const {email} = useSelector((state)=>state.user.user.userData)
   // Handle file attachment change
   const handleAttachmentChange = (e) => {
     console.log(typeof e.target.value);

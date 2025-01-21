@@ -15,6 +15,8 @@ import TrashEmailList from './components/TrashEmailList';
 import TrashEmailDetail from './components/TrashEmailDetail';
 import SentEmailList from './components/sentComponents/SentEmailList';
 import SentEmailDetail from './components/sentComponents/SentEmailDetail';
+import DraftEmailList from './components/DraftComponents/DraftEmailList';
+import DraftEmailDetail from './components/DraftComponents/DraftEmailDetail';
 
 
 function App() {
@@ -70,6 +72,10 @@ const shouldRenderLayout = !noLayoutPaths.includes(location.pathname);
                 <Route path="/sent" >
                   <Route index  element={<SentEmailList />} />
                   <Route path=":email_id" element={<SentEmailDetail />} />
+                </Route>
+                <Route path="/draft" >
+                  <Route index  element={<DraftEmailList />} />
+                  <Route path=":email_id" element={<DraftEmailDetail />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/inbox" />} />
               </Routes>

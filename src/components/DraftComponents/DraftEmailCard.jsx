@@ -7,7 +7,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../../utils/generateToast';
 
 
-const SentEmailCard = ({id, senderName, subject,emailContent}) => {
+const DraftEmailCard = ({id, senderName, subject,emailContent}) => {
 
   const moveEmailToTrash = async()=>{
     try {
@@ -24,7 +24,7 @@ const SentEmailCard = ({id, senderName, subject,emailContent}) => {
   const navigate = useNavigate();
   return (
     <div className="email-card card"
-    onClick={()=>navigate(`/sent/${id}`)}
+    onClick={()=>navigate(`/draft/${id}`)}
     >
         <div className="card-title">
             <h6>{senderName}</h6>
@@ -47,4 +47,4 @@ const SentEmailCard = ({id, senderName, subject,emailContent}) => {
   )
 }
 
-export default SentEmailCard
+export default DraftEmailCard

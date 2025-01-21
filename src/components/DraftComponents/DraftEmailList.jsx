@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../../utils/generateToast';
-import SentEmailCard from './SentEmailCard';
+import DraftEmailCard from './DraftEmailCard';
 
 
 // const email = {
@@ -47,7 +47,7 @@ import SentEmailCard from './SentEmailCard';
 // }
 
 
-const SentEmailList = () => {
+const DraftEmailList = () => {
 
 
     const [emails, setEmails] = useState([]);
@@ -56,7 +56,7 @@ const SentEmailList = () => {
         const token = localStorage.getItem("token-url");
         const config = { headers: { Authorization: `Bearer ${token}` } };
         try {
-          const response = await axiosInstance.get("http://localhost:6002/api/email/sent-emails", config);
+          const response = await axiosInstance.get("http://localhost:6002/api/email/get-draft-emails", config);
           generateToast(response.data.message, TOAST_SUCCESS);
           setEmails(response.data.emails);
         } catch (err) {
@@ -75,7 +75,7 @@ const SentEmailList = () => {
         <div> 
             {
                 emails? emails.map((email)=>(
-                    <SentEmailCard  
+                    <DraftEmailCard  
                     id={email._id}
                     key = {email._id}
                     subject={email.subject}
@@ -94,4 +94,4 @@ const SentEmailList = () => {
     )
 }
 
-export default SentEmailList
+export default DraftEmailList

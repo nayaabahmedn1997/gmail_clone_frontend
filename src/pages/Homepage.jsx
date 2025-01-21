@@ -67,11 +67,7 @@ const Homepage = ({children}) => {
   {
     return <div className="">Loading...</div>
   }
-  if (userStatus === 'failed') {
-    console.log(user)
-    generateToast(user.error, TOAST_ERROR)
-    navigate("/login");
-  }
+  
   return (
     <div>
       <Layout>

@@ -9,6 +9,7 @@ import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToas
 const ComposeEmail = ({ onClose }) => {
   const [attachment, setAttachment] = useState(null);
   const [fileName, setFileName] = useState();
+  const [isDraftEmail, setIsDraftEmail] = useState(false);
   // Handle file attachment change
   const handleAttachmentChange = (e) => {
     console.log(typeof e.target.value);
@@ -58,6 +59,47 @@ const ComposeEmail = ({ onClose }) => {
     }
   };
 
+// Handle form draft
+const handleDraftMail = async (values) => {
+  const { to, subject, body } = values;
+
+  const emailData = {
+  recipient: to, 
+  subject, 
+  body,
+  folder:'draft',
+    attachment,
+  };
+
+  try {
+    const formData = new FormData();
+    formData.append('to', to);
+    formData.append('subject', subject);
+    formData.append('body', body);
+    formData.append('fileName', fileName);
+    formData.append('folder', 'draft');
+    if (attachment) {
+      formData.append('attachment', attachment);
+    }
+    console.log(formData)
+    const response = await axiosInstance.post('/api/email/draft-a-email', formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token-url')}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    const data  = await response.data;
+   
+      generateToast(data.message, TOAST_SUCCESS);
+      // Reset the form and close the compose modal
+      onClose();
+    
+  } catch (error) {
+    console.error('Error sending email:', error);
+    generateToast(error.response.data.message, TOAST_ERROR);
+  }
+};
+
   return (
     <div className="compose-email-modal">
       <div className="compose-email-header">
@@ -72,7 +114,7 @@ const ComposeEmail = ({ onClose }) => {
           subject: '',
           body: '',
         }}
-        onSubmit={handleSubmit}
+        onSubmit={  isDraftEmail? handleDraftMail :handleSubmit}
         validate={(values) => {
           const errors = {};
           if (!values.to) {
@@ -119,11 +161,18 @@ const ComposeEmail = ({ onClose }) => {
               />
             </div>
 
-            <button type="submit" className='btn btn-danger' >Send</button>
-            <button type="submit" className='btn btn-danger' >Draft Email</button>
+            <button type="submit" className='btn btn-danger' >{isDraftEmail? "Draft":"Send"}</button>
+            {/* {
+              !isDraftEmail?<button  className='btn btn-danger ms-2'
+              onClick={()=>setIsDraftEmail(true)}
+              >  Move to Draft</button>:""
+            } */}
+            
           </Form>
+          
         )}
       </Formik>
+      
     </div>
   );
 };

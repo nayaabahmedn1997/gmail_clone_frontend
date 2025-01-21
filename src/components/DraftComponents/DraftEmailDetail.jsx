@@ -16,7 +16,7 @@ import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../../utils/generateT
 dayjs.extend(relativeTime);
 
 
-const SentEmailDetail = () => {
+const DraftEmailDetail = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState(null);
     const {email_id} = useParams();
@@ -64,7 +64,7 @@ const SentEmailDetail = () => {
     <div className="email-navbar">
       <button className="email-navbar-back-button"
       data-toggle="tooltip" data-placement="bottom" title="Go back"
-      onClick={()=>navigate("/sent")}
+      onClick={()=>navigate("/draft")}
       >
       <ArrowLeftOutlined />
       </button>
@@ -135,4 +135,4 @@ const SentEmailDetail = () => {
   )
 }
 
-export default SentEmailDetail
+export default DraftEmailDetail;

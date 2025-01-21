@@ -39,7 +39,7 @@ const LoginForm = () => {
                 const data = response.data;
                 localStorage.setItem('token-url', data.token);
                 generateToast(data.message, TOAST_SUCCESS);
-                navigate('/');
+                navigate('/inbox');
               } catch (error) {
                 generateToast(error.message, TOAST_ERROR);
               }

@@ -16,9 +16,9 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 import UserDropdown from '../components/UserDropdown';
 import SearchComponent from '../components/SearchComponent';
-import EmailContent from '../components/EmailContent';
+import EmailContent from './EmailList';
 import ComposeEmail from '../components/ComposeEmail';
-import SingleEmail from './SingleEmail';
+import SingleEmail from './EmailDetail';
 const { Header, Sider, Content } = Layout;
 
 

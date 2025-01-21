@@ -1,20 +1,34 @@
 import logo from './logo.svg';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import Homepage from './pages/Homepage';
 import {Provider} from 'react-redux'
 import store from './store';
-import EmailPage from './pages/EmailPage';
-import SingleEmail from './components/SingleEmail';
-import SingleEmailViewComponent from './components/SingleEmailVeiwComponent';
+
+import Inbox from './pages/Inbox';
+import Trash from './pages/Trash';
+import EmailList from './components/EmailList';
+import EmailDetail from './components/EmailDetail';
+import TrashEmailList from './components/TrashEmailList';
+import TrashEmailDetail from './components/TrashEmailDetail';
+import SentEmailList from './components/sentComponents/SentEmailList';
+import SentEmailDetail from './components/sentComponents/SentEmailDetail';
 
 
 function App() {
+
+  const location = useLocation();
+
+// Paths without layout
+const noLayoutPaths = ["/login", "/register"];
+
+const shouldRenderLayout = !noLayoutPaths.includes(location.pathname);
+
   return (
   <Provider store={store}>
-   <Routes>
+   {/* <Routes>
     <Route
     path='/' exact
     element={<Homepage />}
@@ -31,7 +45,42 @@ function App() {
     path='/inbox/:email_id'
     element={<SingleEmailViewComponent />}
     />
-   </Routes>
+   </Routes> */}
+
+<Routes>
+      {/* Routes without Layout */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+
+      {/* Routes with Layout */}
+      {shouldRenderLayout ? (
+        <Route
+          path="*"
+          element={
+            <Homepage>
+              <Routes>
+                <Route path="/inbox" >
+                  <Route index  element={<EmailList />} />
+                  <Route path=":email_id" element={<EmailDetail />} />
+                </Route>
+                <Route path="/trash" >
+                  <Route index  element={<TrashEmailList />} />
+                  <Route path=":email_id" element={<TrashEmailDetail />} />
+                </Route>
+                <Route path="/sent" >
+                  <Route index  element={<SentEmailList />} />
+                  <Route path=":email_id" element={<SentEmailDetail />} />
+                </Route>
+                <Route path="*" element={<Navigate to="/inbox" />} />
+              </Routes>
+            </Homepage>
+          }
+        />
+      ) : (
+        <Route path="*" element={<Navigate to="/login" />} />
+      )}
+    </Routes>
+   
    </Provider>
   );
 }

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import EmailCard from './EmailCard'
 import axiosInstance from '../utils/axiosInstance';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToast';
-import SingleEmail from './SingleEmail';
+import SingleEmail from './EmailDetail';
+import { useNavigate } from 'react-router-dom';
 
 
 // const email = {
@@ -46,10 +47,11 @@ import SingleEmail from './SingleEmail';
 // }
 
 
-const EmailContent = () => {
+const EmailList = () => {
 
 
     const [emails, setEmails] = useState([]);
+    const navigate  = useNavigate();
     const fetchEmails = async () => {
         const token = localStorage.getItem("token-url");
         const config = { headers: { Authorization: `Bearer ${token}` } };
@@ -79,6 +81,7 @@ const EmailContent = () => {
                     subject={email.subject}
                     senderName={email.sender.name}
                     emailContent={email.body}
+                
                     /> 
                     // <SingleEmail 
                     // key = {email._id}
@@ -91,4 +94,4 @@ const EmailContent = () => {
     )
 }
 
-export default EmailContent
+export default EmailList

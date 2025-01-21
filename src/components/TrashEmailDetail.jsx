@@ -13,7 +13,9 @@ import '../styles/singleEmail.css'
 
 // Extend Day.js with the RelativeTime plugin
 dayjs.extend(relativeTime);
-const SingleEmail = () => {
+
+
+const TrashEmailDetail = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState(null);
     const {email_id} = useParams();
@@ -31,14 +33,14 @@ const SingleEmail = () => {
         }
     }
 
-    const moveMailToTrash = async  ()=>{
+    const deleteEmail = async  ()=>{
       try {
         const token = localStorage.getItem("token-url");
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const response  = await axiosInstance.post('/api/email/move-to-trash', {email_id}, config);
+        const response  = await axiosInstance.post('/api/email/delete-an-email', {email_id}, config);
         const data = await response.data;
         generateToast(data.message, TOAST_SUCCESS);
-        navigate("/")
+        navigate("/trash")
       } catch (error) {
         generateToast(error.response.message, TOAST_ERROR);
       }
@@ -61,13 +63,13 @@ const SingleEmail = () => {
     <div className="email-navbar">
       <button className="email-navbar-back-button"
       data-toggle="tooltip" data-placement="bottom" title="Go back"
-      onClick={()=>navigate("/")}
+      onClick={()=>navigate("/trash")}
       >
       <ArrowLeftOutlined />
       </button>
       <button className="email-navbar-delete-button"
       data-toggle="tooltip" data-placement="bottom" title="move to trash"
-      onClick={()=>moveMailToTrash()}
+      onClick={()=>deleteEmail()}
       >
         <DeleteOutlined />
       </button>
@@ -132,4 +134,4 @@ const SingleEmail = () => {
   )
 }
 
-export default SingleEmail
+export default TrashEmailDetail

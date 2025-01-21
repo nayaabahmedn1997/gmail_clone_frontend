@@ -5,24 +5,24 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToast';
 import axiosInstance from '../utils/axiosInstance';
-const EmailCard = ({id, senderName, subject,emailContent}) => {
+const TrashEmailCard = ({id, senderName, subject,emailContent}) => {
 
-  const moveEmailToTrash = async()=>{
+  const deleteEmail = async  ()=>{
     try {
       const token = localStorage.getItem("token-url");
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      const response  = await axiosInstance.post('/api/email/move-to-trash', {email_id:id}, config);
+      const response  = await axiosInstance.post('/api/email/delete-an-email', {email_id:id}, config);
       const data = await response.data;
-      generateToast(data.message, TOAST_SUCCESS)
+      generateToast(data.message, TOAST_SUCCESS);
+      navigate("/trash")
     } catch (error) {
-      generateToast(error.response.message, TOAST_ERROR)
-      console.log(error)
+      generateToast(error.response.message, TOAST_ERROR);
     }
   }
   const navigate = useNavigate();
   return (
     <div className="email-card card"
-    onClick={()=>navigate(`/inbox/${id}`)}
+    onClick={()=>navigate(`/trash/${id}`)}
     >
         <div className="card-title">
             <h6>{senderName}</h6>
@@ -38,11 +38,11 @@ const EmailCard = ({id, senderName, subject,emailContent}) => {
          
         <DeleteOutlined
         aria-description='delete email'
-        onClick={moveEmailToTrash}
+        onClick={deleteEmail}
         />
         </div>
     </div>
   )
 }
 
-export default EmailCard
+export default TrashEmailCard

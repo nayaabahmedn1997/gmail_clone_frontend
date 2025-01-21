@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserData } from '../store/slices/userSlice';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToast';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import {
   DeleteOutlined,
@@ -16,12 +16,12 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 import UserDropdown from '../components/UserDropdown';
 import SearchComponent from '../components/SearchComponent';
-import EmailContent from '../components/EmailContent';
+import EmailContent from '../components/EmailList';
 import ComposeEmail from '../components/ComposeEmail';
 const { Header, Sider, Content } = Layout;
 
 
-const Homepage = () => {
+const Homepage = ({children}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state)=>state.user.user);
@@ -95,21 +95,33 @@ const Homepage = () => {
               key: '2',
               icon: <InboxOutlined />,
               label: 'Inbox',
+              onClick: ()=>{
+                navigate("/inbox")
+              }
             },
             {
               key: '3',
               icon: <SendOutlined />,
               label: 'Sent',
+              onClick: ()=>{
+                navigate("/sent")
+              }
             },
             {
               key: '4',
               icon: <DeleteOutlined />,
               label: 'Trash',
+              onClick: ()=>{
+                navigate("/trash")
+              }
             },
             {
               key: '5',
               icon: <FileOutlined />,
               label: 'Draft',
+              onClick: ()=>{
+                navigate("/draft")
+              }
             },
 
            
@@ -152,7 +164,9 @@ const Homepage = () => {
          {isComposeVisible && (
         <ComposeEmail onClose={handleCloseCompose} />
           )}
-          <EmailContent />
+          {/* <EmailContent /> */}
+          {children}
+          <Outlet /> {/* This renders the child routes */}
         </Content>
       </Layout>
     </Layout>

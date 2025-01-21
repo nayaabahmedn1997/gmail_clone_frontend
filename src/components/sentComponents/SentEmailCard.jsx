@@ -3,9 +3,11 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToast';
-import axiosInstance from '../utils/axiosInstance';
-const EmailCard = ({id, senderName, subject,emailContent}) => {
+import axiosInstance from '../../utils/axiosInstance';
+import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../../utils/generateToast';
+
+
+const SentEmailCard = ({id, senderName, subject,emailContent}) => {
 
   const moveEmailToTrash = async()=>{
     try {
@@ -22,7 +24,7 @@ const EmailCard = ({id, senderName, subject,emailContent}) => {
   const navigate = useNavigate();
   return (
     <div className="email-card card"
-    onClick={()=>navigate(`/inbox/${id}`)}
+    onClick={()=>navigate(`/sent/${id}`)}
     >
         <div className="card-title">
             <h6>{senderName}</h6>
@@ -45,4 +47,4 @@ const EmailCard = ({id, senderName, subject,emailContent}) => {
   )
 }
 
-export default EmailCard
+export default SentEmailCard

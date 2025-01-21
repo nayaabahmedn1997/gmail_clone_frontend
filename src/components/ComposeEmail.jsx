@@ -120,6 +120,7 @@ const ComposeEmail = ({ onClose }) => {
             </div>
 
             <button type="submit" className='btn btn-danger' >Send</button>
+            <button type="submit" className='btn btn-danger' >Draft Email</button>
           </Form>
         )}
       </Formik>

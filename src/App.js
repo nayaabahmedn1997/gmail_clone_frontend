@@ -17,6 +17,7 @@ import SentEmailList from './components/sentComponents/SentEmailList';
 import SentEmailDetail from './components/sentComponents/SentEmailDetail';
 import DraftEmailList from './components/DraftComponents/DraftEmailList';
 import DraftEmailDetail from './components/DraftComponents/DraftEmailDetail';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 function App() {
@@ -61,21 +62,55 @@ const shouldRenderLayout = !noLayoutPaths.includes(location.pathname);
           element={
             <Homepage>
               <Routes>
+
                 <Route path="/inbox" >
-                  <Route index  element={<EmailList />} />
-                  <Route path=":email_id" element={<EmailDetail />} />
+                  <Route index  element={
+                    <ProtectedRoute>
+                    <EmailList />
+                    </ProtectedRoute>
+                    }
+                     />
+                  <Route path=":email_id" element={
+                     <ProtectedRoute>
+                    <EmailDetail />
+                    </ProtectedRoute>
+                    } />
                 </Route>
                 <Route path="/trash" >
-                  <Route index  element={<TrashEmailList />} />
-                  <Route path=":email_id" element={<TrashEmailDetail />} />
+                  <Route index  element={
+                    <ProtectedRoute>
+                    <TrashEmailList />
+                    </ProtectedRoute>
+                  } />
+                  <Route path=":email_id" element={
+                    <ProtectedRoute>
+                    <TrashEmailDetail />
+                    </ProtectedRoute>
+                    } />
                 </Route>
                 <Route path="/sent" >
-                  <Route index  element={<SentEmailList />} />
-                  <Route path=":email_id" element={<SentEmailDetail />} />
+                  <Route index  element={
+                    <ProtectedRoute>
+                    <SentEmailList />
+                    </ProtectedRoute>
+                    } />
+                  <Route path=":email_id" element={
+                    <ProtectedRoute>
+                    <SentEmailDetail />
+                    </ProtectedRoute>
+                    } />
                 </Route>
                 <Route path="/draft" >
-                  <Route index  element={<DraftEmailList />} />
-                  <Route path=":email_id" element={<DraftEmailDetail />} />
+                  <Route index  element={
+                    <ProtectedRoute>
+                    <DraftEmailList />
+                    </ProtectedRoute>
+                    } />
+                  <Route path=":email_id" element={
+                    <ProtectedRoute>
+                    <DraftEmailDetail />
+                    </ProtectedRoute>
+                    } />
                 </Route>
                 <Route path="*" element={<Navigate to="/inbox" />} />
               </Routes>

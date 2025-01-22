@@ -2,13 +2,16 @@ import React from 'react';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Tooltip } from 'antd';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 const handleButtonClick = (e) => {
+
+  
+
   message.info('Click on left button.');
   console.log('click left button', e);
 };
 const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
+ localStorage.removeItem('token-url');
 };
 const items = [
   {
@@ -23,7 +26,7 @@ const menuProps = {
   onClick: handleMenuClick,
 };
 const UserDropdown = () =>{
-
+   const navigate = useNavigate();
     const userData = useSelector((state)=>state.user.user);
    
 return (

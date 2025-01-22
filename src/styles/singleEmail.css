@@ -88,3 +88,10 @@
     color: grey;
     font-size: 16px;
   }
+  .attachment-section
+  {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+  }

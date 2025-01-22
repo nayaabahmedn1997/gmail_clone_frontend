@@ -5,11 +5,13 @@ import '../styles/composeEmail.css';
 import axiosInstance from '../utils/axiosInstance';
 import { useSelector } from 'react-redux';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToast';
+import * as Yup from "yup";
 
 const ComposeEmail = ({ onClose }) => {
   const [attachment, setAttachment] = useState(null);
   const [fileName, setFileName] = useState();
   const [isDraftEmail, setIsDraftEmail] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
   // Handle file attachment change
   const handleAttachmentChange = (e) => {
     console.log(typeof e.target.value);
@@ -20,16 +22,24 @@ const ComposeEmail = ({ onClose }) => {
     setAttachment(file);
   };
 
-  // Handle form submission
-  const handleSubmit = async (values) => {
-    const { to, subject, body } = values;
+  const validationSchema = Yup.object({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    message: Yup.string(),
+  });
 
-    const emailData = {
-    recipient: to, 
-    subject, 
-    body,
-      attachment,
-    };
+
+  // Handle form submission
+  const handleSubmit = async (values, { setSubmitting, resetForm }, actionType)=> {
+    const { to, subject, body } = values;
+    setSubmitting(true);
+
+    const url =
+      actionType === "submit"
+        ? "/api/email/create-email" // Endpoint to submit the form
+        : "/api/email/draft-a-email"; // Endpoint to save the form as a draft
+
+    console.log(url)
 
     try {
       const formData = new FormData();
@@ -40,8 +50,9 @@ const ComposeEmail = ({ onClose }) => {
       if (attachment) {
         formData.append('attachment', attachment);
       }
+      console.log(formData)
 
-      const response = await axiosInstance.post('/api/email/create-email', formData, {
+      const response = await axiosInstance.post(url , formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token-url')}`,
           'Content-Type': 'multipart/form-data',
@@ -55,7 +66,7 @@ const ComposeEmail = ({ onClose }) => {
       
     } catch (error) {
       console.error('Error sending email:', error);
-      generateToast(error.response.data.message, TOAST_ERROR);
+     // generateToast(error.response.message, TOAST_ERROR);
     }
   };
 
@@ -114,22 +125,26 @@ const handleDraftMail = async (values) => {
           subject: '',
           body: '',
         }}
-        onSubmit={  isDraftEmail? handleDraftMail :handleSubmit}
-        validate={(values) => {
-          const errors = {};
-          if (!values.to) {
-            errors.to = 'Required';
-          }
-          if (!values.subject) {
-            errors.subject = 'Required';
-          }
-          if (!values.body) {
-            errors.body = 'Required';
-          }
-          return errors;
+        onSubmit={(values, actions) => {
+          // Formik onSubmit will only set the initial behavior. We'll handle button-specific logic separately.
+          console.log("Formik Submitted Values: ", values);
         }}
+        // validate={(values) => {
+        //   const errors = {};
+        //   if (!values.to) {
+        //     errors.to = 'Required';
+        //   }
+        //   if (!values.subject) {
+        //     errors.subject = 'Required';
+        //   }
+        //   if (!values.body) {
+        //     errors.body = 'Required';
+        //   }
+        //   return errors;
+        // }}
+        validationSchema={validationSchema}
       >
-        {({ setFieldValue }) => (
+        {({ setFieldValue, isSubmitting, values, resetForm }) => (
           <Form>
             <div className="form-group">
               <label htmlFor="to">To:</label>
@@ -161,12 +176,28 @@ const handleDraftMail = async (values) => {
               />
             </div>
 
-            <button type="submit" className='btn btn-danger' >{isDraftEmail? "Draft":"Send"}</button>
-            {/* {
-              !isDraftEmail?<button  className='btn btn-danger ms-2'
-              onClick={()=>setIsDraftEmail(true)}
-              >  Move to Draft</button>:""
-            } */}
+           {/* Two Buttons with Different Action Types */}
+          <button
+            type="button"
+            className='btn btn-primary'
+            onClick={() =>
+              handleSubmit(values, { setSubmitting, resetForm }, "submit")
+            }
+            disabled={isSubmitting}
+          >
+            Submit
+          </button>
+          <button
+          className='ms-1 btn btn-danger'
+            type="button"
+            onClick={() =>
+              handleSubmit(values, { setSubmitting, resetForm }, "save_draft")
+            }
+            disabled={isSubmitting}
+          >
+            Save as Draft
+          </button>
+
             
           </Form>
           

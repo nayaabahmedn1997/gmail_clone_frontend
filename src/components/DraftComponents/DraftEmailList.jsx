@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../../utils/generateToast';
 import DraftEmailCard from './DraftEmailCard';
+import PaginationComp from '../PaginationComp';
 
 
 // const email = {
@@ -51,6 +52,8 @@ const DraftEmailList = () => {
 
 
     const [emails, setEmails] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+      const itemsPerPage = 5;
     const navigate  = useNavigate();
     const fetchEmails = async () => {
         const token = localStorage.getItem("token-url");
@@ -70,11 +73,32 @@ const DraftEmailList = () => {
   
       fetchEmails();
     }, []);
+    // Calculate indices for current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentEmails = emails.slice(indexOfFirstItem, indexOfLastItem);
+      // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Navigate to Next Page
+  const nextPage = () => {
+    if (currentPage < Math.ceil(emails?.length / itemsPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  // Navigate to Previous Page
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
 
     return (
         <div> 
             {
-                emails? emails.map((email)=>(
+               emails ? currentEmails.map((email)=>(
                     <DraftEmailCard  
                     id={email._id}
                     key = {email._id}
@@ -88,7 +112,17 @@ const DraftEmailList = () => {
                     // email={email} />
                 )):<h1>No emails</h1>
             }
-           
+           {
+        currentEmails.length> 0 ?
+          <PaginationComp
+            itemsPerPage={itemsPerPage}
+            totalItems={emails?.length}
+            paginate={paginate}
+            currentPage={currentPage}
+            nextPage={nextPage}
+            prevPage={prevPage}
+          /> : ""
+      }
         
         </div>
     )

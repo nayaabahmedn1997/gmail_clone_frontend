@@ -121,7 +121,7 @@ const EmailDetail = () => {
             ) : (
               <a href={`http://localhost:6002/${email.attachment}`} target="_blank" rel="noopener noreferrer" download>
                 <button className="btn btn-sm btn-outline-primary">
-                 {email?.attachment.split("\\")[1]}
+                 {email?.attachment.split("\\")[1]|| "Download attachment"}
                 </button>
               </a>
             )}

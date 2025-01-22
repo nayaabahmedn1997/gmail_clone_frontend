@@ -47,6 +47,22 @@ const DraftEmailDetail = () => {
       }
     }
 
+
+    const sendDraftMail = async () =>{
+      try {
+          
+        const token = localStorage.getItem("token-url");
+        const config = { headers: { Authorization: `Bearer ${token}` } };
+        const response  = await axiosInstance.post('/api/email/send-draft-mail', {email_id}, config);
+        const data = await response.data;
+        setEmail(data.emailData);
+        generateToast(data.message, TOAST_SUCCESS);
+        navigate('/draft');
+    } catch (error) {
+        generateToast(error.response.message, TOAST_ERROR);
+    }
+    }
+
     useEffect(()=>{
 
         fetchSingleEmailData();
@@ -108,7 +124,7 @@ const DraftEmailDetail = () => {
     </div>
   </div>
 
-  <div className="mt-3">
+  <div className="mt-3 attachment-section">
         {email?.attachment &&
           (
             <div  className="mb-2">
@@ -122,13 +138,26 @@ const DraftEmailDetail = () => {
             ) : (
               <a href={`http://localhost:6002/${email.attachment}`} target="_blank" rel="noopener noreferrer" download>
                 <button className="btn btn-sm btn-outline-primary">
-                 {email?.attachment.split("\\")[1]}
+                 {email?.attachment.split("\\")[1] || "Download attachment"}
                 </button>
               </a>
+
+
+
+              
+
             )}
           </div>
           )}
+          <button
+          className='btn btn-sm btn-outline-primary mb-2'
+          onClick={sendDraftMail}
+          >
+        send mail
+      </button>
       </div>
+
+    
 
   </div>
   

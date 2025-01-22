@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosInstance';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../../utils/generateToast';
 import SentEmailCard from './SentEmailCard';
+import { Pagination } from 'antd';
+import PaginationComp from '../PaginationComp';
 
 
 // const email = {
@@ -50,48 +52,83 @@ import SentEmailCard from './SentEmailCard';
 const SentEmailList = () => {
 
 
-    const [emails, setEmails] = useState([]);
-    const navigate  = useNavigate();
-    const fetchEmails = async () => {
-        const token = localStorage.getItem("token-url");
-        const config = { headers: { Authorization: `Bearer ${token}` } };
-        try {
-          const response = await axiosInstance.get("http://localhost:6002/api/email/sent-emails", config);
-          generateToast(response.data.message, TOAST_SUCCESS);
-          setEmails(response.data.emails);
-        } catch (err) {
-            generateToast(err.response.message, TOAST_ERROR);
-          console.error("Error fetching emails:", err);
-        }
-      };
+  const [emails, setEmails] = useState([]);
 
-    useEffect(() => {
-      
-  
-      fetchEmails();
-    }, []);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const navigate = useNavigate();
+  const fetchEmails = async () => {
+    const token = localStorage.getItem("token-url");
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+    try {
+      const response = await axiosInstance.get("http://localhost:6002/api/email/sent-emails", config);
+      generateToast(response.data.message, TOAST_SUCCESS);
+      setEmails(response.data.emails);
+    } catch (err) {
+      generateToast(err.response.message, TOAST_ERROR);
+      console.error("Error fetching emails:", err);
+    }
+  };
 
-    return (
-        <div> 
-            {
-                emails? emails.map((email)=>(
-                    <SentEmailCard  
-                    id={email._id}
-                    key = {email._id}
-                    subject={email.subject}
-                    senderName={email.recipient}
-                    emailContent={email.body}
-                
-                    /> 
-                    // <SingleEmail 
-                    // key = {email._id}
-                    // email={email} />
-                )):<h1>No emails</h1>
-            }
-           
-        
-        </div>
-    )
+  useEffect(() => {
+
+
+    fetchEmails();
+  }, []);
+
+  // Calculate indices for current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentEmails = emails.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Navigate to Next Page
+  const nextPage = () => {
+    if (currentPage < Math.ceil(emails?.length / itemsPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  // Navigate to Previous Page
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  return (
+    <div>
+      {
+        emails ? currentEmails.map((email) => (
+          <SentEmailCard
+            id={email._id}
+            key={email._id}
+            subject={email.subject}
+            senderName={email.recipient}
+            emailContent={email.body}
+
+          />
+          // <SingleEmail 
+          // key = {email._id}
+          // email={email} />
+        )) : <h1>No emails</h1>
+      }
+      {
+        currentEmails.length> 0  ?
+          <PaginationComp
+            itemsPerPage={itemsPerPage}
+            totalItems={emails?.length}
+            paginate={paginate}
+            currentPage={currentPage}
+            nextPage={nextPage}
+            prevPage={prevPage}
+          /> : ""
+      }
+
+    </div>
+  )
 }
 
 export default SentEmailList

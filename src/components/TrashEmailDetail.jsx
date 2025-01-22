@@ -68,7 +68,7 @@ const TrashEmailDetail = () => {
       <ArrowLeftOutlined />
       </button>
       <button className="email-navbar-delete-button"
-      data-toggle="tooltip" data-placement="bottom" title="move to trash"
+      data-toggle="tooltip" data-placement="bottom" title="Delete mail"
       onClick={()=>deleteEmail()}
       >
         <DeleteOutlined />
@@ -121,8 +121,10 @@ const TrashEmailDetail = () => {
             ) : (
               <a href={`http://localhost:6002/${email.attachment}`} target="_blank" rel="noopener noreferrer" download>
                 <button className="btn btn-sm btn-outline-primary">
-                 {email?.attachment.split("\\")[1]}
+                 {email?.attachment.split("\\")[1] || "Download attachment"}
                 </button>
+
+                
               </a>
             )}
           </div>

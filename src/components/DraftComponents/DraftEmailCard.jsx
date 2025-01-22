@@ -15,6 +15,7 @@ const DraftEmailCard = ({id, senderName, subject,emailContent}) => {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const response  = await axiosInstance.post('/api/email/move-to-trash', {email_id:id}, config);
       const data = await response.data;
+      navigate("/draft")
       generateToast(data.message, TOAST_SUCCESS)
     } catch (error) {
       generateToast(error.response.message, TOAST_ERROR)

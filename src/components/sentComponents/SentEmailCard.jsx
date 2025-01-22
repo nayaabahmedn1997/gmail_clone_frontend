@@ -8,28 +8,33 @@ import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../../utils/generateT
 
 
 const SentEmailCard = ({id, senderName, subject,emailContent}) => {
-
+  const navigate = useNavigate();
   const moveEmailToTrash = async()=>{
     try {
       const token = localStorage.getItem("token-url");
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const response  = await axiosInstance.post('/api/email/move-to-trash', {email_id:id}, config);
       const data = await response.data;
-      generateToast(data.message, TOAST_SUCCESS)
+      generateToast(data.message, TOAST_SUCCESS);
+      navigate("/sent")
     } catch (error) {
       generateToast(error.response.message, TOAST_ERROR)
       console.log(error)
     }
   }
-  const navigate = useNavigate();
+
   return (
     <div className="email-card card"
-    onClick={()=>navigate(`/sent/${id}`)}
+   
     >
-        <div className="card-title">
+        <div className="card-title"
+         onClick={()=>navigate(`/sent/${id}`)}
+        >
             <h6>{senderName}</h6>
         </div>
-        <div className="card-content">
+        <div className="card-content"
+         onClick={()=>navigate(`/sent/${id}`)}
+        >
             <p className="card-subject">
                 {subject} -- 
             </p>

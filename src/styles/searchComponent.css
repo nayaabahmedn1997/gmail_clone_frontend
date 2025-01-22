@@ -1,0 +1,55 @@
+/* Center the search bar in the navbar */
+.search-container {
+    position: relative;
+    width: 50%; /* Adjust width as needed */
+    margin: auto;
+  }
+  
+  /* Input styling */
+  .search-input {
+    width: 100%; /* Input takes full width of container */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  /* Search results box */
+  .search-results {
+    position: absolute;
+    top: 100%; /* Align just below the search bar */
+    left: 0;
+    width: 100%; /* Match the width of the search input */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 1000;
+    max-height: 200px; /* Limit height for scrollable results */
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  
+  /* Individual result item */
+  .result-item {
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  .result-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* Hover effect for result items */
+  .result-item:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+  }
+  
+  /* Adjust width for smaller screens */
+  @media (max-width: 768px) {
+    .search-container {
+      width: 75%;
+    }
+  }
+  

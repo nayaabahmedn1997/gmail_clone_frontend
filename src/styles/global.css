@@ -113,3 +113,7 @@
   align-items: flex-end;
   cursor: pointer;
 }
+.search-results
+{
+  z-index: -1;
+}

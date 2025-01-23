@@ -1,55 +1,70 @@
-/* Center the search bar in the navbar */
-.search-container {
-    position: relative;
-    width: 50%; /* Adjust width as needed */
-    margin: auto;
-  }
-  
-  /* Input styling */
-  .search-input {
-    width: 100%; /* Input takes full width of container */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 8px;
-    font-size: 16px;
-  }
-  
-  /* Search results box */
-  .search-results {
-    position: absolute;
-    top: 100%; /* Align just below the search bar */
-    left: 0;
-    width: 100%; /* Match the width of the search input */
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    z-index: 1000;
-    max-height: 200px; /* Limit height for scrollable results */
-    overflow-y: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-  }
-  
-  /* Individual result item */
-  .result-item {
-    padding: 10px;
-    border-bottom: 1px solid #f1f1f1;
-  }
-  
-  .result-item:last-child {
-    border-bottom: none;
-  }
-  
-  /* Hover effect for result items */
-  .result-item:hover {
-    background-color: #f8f9fa;
-    cursor: pointer;
-  }
-  
-  /* Adjust width for smaller screens */
-  @media (max-width: 768px) {
-    .search-container {
-      width: 75%;
-    }
-  }
-  
+/* Wrapper for the search bar */
+.search-bar-container {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+}
+.search-element{
+  height: 100px;
+}
+.search-bar-input
+{
+  height: 100px !important;
+}
+
+
+/* Input box styles */
+.search-bar-container input {
+  width: 100%;
+  padding: 10px; 
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  height: 100px !important;
+}
+
+
+/* Results dropdown container */
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: -1000;
+  color: black;
+}
+
+/* Each result card */
+.search-result-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+.search-results {
+  z-index: 1000 !important;
+}
+
+/* Hover effect for result cards */
+.search-result-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Sender and recipient text */
+.search-result-item strong {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Additional details text */
+.search-result-item p {
+  margin: 0;
+  font-size: 12px;
+  color: #555;
+}

@@ -70,10 +70,38 @@
 
 .menu-container
 {
+  
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
+
+}
+@media screen and (min-width: 400px) and (max-width: 720px) {
+  .ant-layout-header
+  {
+    height: 150px !important;
+  }
+  .menu-container
+{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  justify-content:center;
+  align-items: flex-start;
+  gap: 10px;
+ 
+
+}
+.search-bar-container
+{
+  margin: 0px;
+}
+.ant-layout-content 
+{
+  overflow: scroll;
+}
+
 }
 
 .user
@@ -116,4 +144,9 @@
 .search-results
 {
   z-index: -1;
+}
+
+body{
+  box-sizing: border-box;
+  overflow: scroll;
 }

@@ -139,7 +139,7 @@ const Homepage = ({children}) => {
             style={{
               fontSize: '16px',
               width: 64,
-              height: 70,
+            
             }}
           />
           

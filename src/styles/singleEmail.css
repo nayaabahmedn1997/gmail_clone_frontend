@@ -4,8 +4,9 @@
     justify-content: flex-start;
     flex-direction: column;
     gap: 20px;
-    margin-top: 50px;
+    width: 100%;
     padding-bottom: 50px;
+    margin:  0px;
 }
 
 .email-navbar

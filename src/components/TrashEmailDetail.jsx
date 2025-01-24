@@ -113,13 +113,13 @@ const TrashEmailDetail = () => {
             <div  className="mb-2">
             {email.attachment.endsWith(".jpg") || email.attachment.endsWith(".png") ? (
               <img
-                src={`http://localhost:6002/${email.attachment}`}
+                src={`https://gmail-clone-backend-pfid.onrender.com/${email.attachment}`}
                 alt={`Attachment`}
                 style={{ maxWidth: "150px", maxHeight: "150px" }}
                 className="img-thumbnail"
               />
             ) : (
-              <a href={`http://localhost:6002/${email.attachment}`} target="_blank" rel="noopener noreferrer" download>
+              <a href={`https://gmail-clone-backend-pfid.onrender.com/${email.attachment}`} target="_blank" rel="noopener noreferrer" download>
                 <button className="btn btn-sm btn-outline-primary">
                  {email?.attachment.split("\\")[1] || "Download attachment"}
                 </button>

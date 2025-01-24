@@ -59,7 +59,7 @@ const EmailList = () => {
         const token = localStorage.getItem("token-url");
         const config = { headers: { Authorization: `Bearer ${token}` } };
         try {
-          const response = await axiosInstance.get("http://localhost:6002/api/email/get-emails", config);
+          const response = await axiosInstance.get("/api/email/get-emails", config);
           generateToast(response.data.message, TOAST_SUCCESS);
           setEmails(response.data.emails);
         } catch (err) {

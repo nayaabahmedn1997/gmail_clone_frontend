@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 import { generateToast, TOAST_ERROR, TOAST_SUCCESS } from '../utils/generateToast';
 
-const socket = io('http://localhost:6002',{
+const socket = io('https://gmail-clone-backend-pfid.onrender.com',{
     //withCredentials: true,
     // extraHeaders: {
     //     "my-custom-header": "abcd"

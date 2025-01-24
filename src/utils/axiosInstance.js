@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL:"http://localhost:6002/"
+    baseURL:"https://gmail-clone-backend-pfid.onrender.com"
 })
 
 export default axiosInstance;

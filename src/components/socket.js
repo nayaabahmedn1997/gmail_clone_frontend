@@ -6,6 +6,9 @@ const socket = io('http://localhost:6002',{
     // extraHeaders: {
     //     "my-custom-header": "abcd"
     //   } // Allow credentials like cookies or headers
+    auth: {
+      token: localStorage.getItem('token-url'), // Send JWT token
+    },
     }); // Backend server URL
 
 socket.on('connect', () => {

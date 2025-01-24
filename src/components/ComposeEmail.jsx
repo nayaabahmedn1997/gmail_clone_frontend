@@ -50,8 +50,6 @@ const ComposeEmail = ({ onClose }) => {
       if (attachment) {
         formData.append('attachment', attachment);
       }
-      console.log(formData)
-
       const response = await axiosInstance.post(url , formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token-url')}`,

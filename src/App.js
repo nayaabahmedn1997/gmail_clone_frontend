@@ -18,9 +18,11 @@ import SentEmailDetail from './components/sentComponents/SentEmailDetail';
 import DraftEmailList from './components/DraftComponents/DraftEmailList';
 import DraftEmailDetail from './components/DraftComponents/DraftEmailDetail';
 import ProtectedRoute from './components/ProtectedRoute';
-
+import { io } from 'socket.io-client';
 
 function App() {
+  
+
 
   const location = useLocation();
 

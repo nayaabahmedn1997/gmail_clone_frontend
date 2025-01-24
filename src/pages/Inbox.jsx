@@ -5,6 +5,9 @@ import EmailDetail from "../components/EmailDetail";
 
 
 const Inbox = () => {
+
+  
+
   return (
     <div>
       {/* Nested Routes for Inbox */}

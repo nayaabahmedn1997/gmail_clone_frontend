@@ -18,6 +18,7 @@ import UserDropdown from '../components/UserDropdown';
 import SearchComponent from '../components/SearchComponent';
 import EmailContent from '../components/EmailList';
 import ComposeEmail from '../components/ComposeEmail';
+import socket from '../components/socket';
 const { Header, Sider, Content } = Layout;
 
 
@@ -29,6 +30,25 @@ const Homepage = ({children}) => {
   const userError = useSelector((state) => state.user.error);
   const [collapsed, setCollapsed] = useState(false);
   const [isComposeVisible, setIsComposeVisible] = useState(false);
+
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    // Listen for new email notifications
+    socket.on('new_email', (email) => {
+      console.log('New email received:', email);
+
+      // Add the new email to notifications
+      setNotifications((prev) => [...prev, email]);
+    });
+
+    // Clean up the socket listener
+    return () => {
+      socket.off('new_email');
+    };
+  }, []);
+
+
   // Function to open the Compose Email modal
   const handleComposeClick = () => {
     setIsComposeVisible(true);
